@@ -1,6 +1,5 @@
 package net.germanminers.gmhorses;
 
-import org.bukkit.entity.Horse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;

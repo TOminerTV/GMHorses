@@ -1,9 +1,6 @@
 package net.germanminers.gmhorses;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -173,21 +171,30 @@ public final class HorseManager
 
     public static void checkDespawnDistance()
     {
+        ArrayList<UUID> toRemove = new ArrayList<>();
+
         for(UUID playerUUID : spawnedHorses.keySet())
         {
             Horse horse = (Horse) Bukkit.getEntity(spawnedHorses.get(playerUUID));
+            Player player = Bukkit.getPlayer(playerUUID);
 
-            if(horse != null)
+            if(horse != null && player != null)
             {
-                //TODO: from config
-                if(!horse.getNearbyEntities(30, 30, 30).contains(Bukkit.getPlayer(playerUUID)))
+                Location playerLoc = player.getLocation();
+                Location horseLoc = horse.getLocation();
+
+                //TODO: range from config
+                if(playerLoc.toVector().distance(horseLoc.toVector()) > 30D)
                 {
-                    removeHorse(playerUUID);
+                    toRemove.add(playerUUID);
                 }
             }
         }
+
+        removeHorsesFromList(toRemove);
     }
 
+    @Deprecated
     public static void removeHorse(UUID playerUUID)
     {
         Horse horse = (Horse) Bukkit.getEntity(spawnedHorses.get(playerUUID));
@@ -200,6 +207,7 @@ public final class HorseManager
         }
     }
 
+    @Deprecated
     public static void removeAllHorses()
     {
         for(UUID playerUUID : spawnedHorses.keySet())
@@ -207,7 +215,28 @@ public final class HorseManager
             removeHorse(playerUUID);
         }
 
-        spawnedHorses.clear(); // TODO: refactor
+        spawnedHorses.clear();
+    }
+
+    // TODO: refactor
+    private static void removeHorsesFromList(ArrayList<UUID> toRemove)
+    {
+        removeHorsesFromList(toRemove, false);
+    }
+
+    private static void removeHorsesFromList(ArrayList<UUID> toRemove, boolean removeAll)
+    {
+        for(UUID playerUUID : toRemove)
+        {
+            Horse horse = (Horse) Bukkit.getEntity(spawnedHorses.get(playerUUID));
+
+            if(horse != null)
+            {
+                horse.remove();
+
+                spawnedHorses.remove(playerUUID);
+            }
+        }
     }
 
 

@@ -37,6 +37,14 @@ public class GMHorses extends JavaPlugin
 
         Bukkit.getConsoleSender().sendMessage("[GMHorses] " + ChatColor.GREEN + "GMHorses wurde erfolgreich aktiviert!");
         Bukkit.getConsoleSender().sendMessage("[GMHorses] " + ChatColor.GREEN + "GMHorses Version: " + version);
+
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
+        {
+            public void run()
+            {
+                HorseManager.checkDespawnDistance();
+            }
+        }, 0, 20*10);
     }
 
     public void onDisable()
