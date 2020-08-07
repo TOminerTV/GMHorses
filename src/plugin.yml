@@ -1,0 +1,9 @@
+name: GMHorses
+main: net.germanminers.gmhorses.GMHorses
+version: 1.1
+author: NicTheChick, TOminerTV
+api-version: 1.16
+commands:
+  gmhorses:
+    description: main command for gmhorses
+    usage: /gmhorses

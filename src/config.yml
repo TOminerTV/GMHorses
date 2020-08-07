@@ -1,0 +1,11 @@
+prefix: '&8[&6GM&8] '
+commandError: '&4Es scheint einen Fehler mit dem GMHORSES-Befehl gegeben zu haben, sind die Argumente auch richtig angegeben?'
+targetIsAir: '&4Du darfst das Pferd nicht in der Luft spawnen!'
+notTheOwnHorse: '&4Dieses Pferd gehört dir nicht!'
+onHorseReceive: '&6Du hast eben dein gekauftes Pferd erhalten!'
+
+host: localhost
+port: 3306
+database: GMRecruiting
+username: root
+password: ''
